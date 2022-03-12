@@ -28,11 +28,6 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 CORS_ORIGIN_ALLOW_ALL = True
-# CORS_ORIGIN_WHITELIST = [
-#     'http://localhost:3000',
-#     'http://192.168.1.108:3000'
-# ]
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -42,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
+    'project',
+    'todo',
     'corsheaders',
     'rest_framework',
 ]
@@ -113,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Moscow/Europe'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
