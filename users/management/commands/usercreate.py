@@ -22,7 +22,7 @@ class Command(BaseCommand):
         superuser = User.objects.create(
             username='root',
             first_name=fake.first_name(),
-            last_name=fake.lase_name(),
+            last_name=fake.last_name(),
             email=fake.email()
         )
         superuser.is_superuser = True
