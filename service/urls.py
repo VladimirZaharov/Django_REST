@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include, re_path
+from graphene_django.views import GraphQLView
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
 from drf_yasg.views import get_schema_view
@@ -30,5 +31,6 @@ urlpatterns = [
     path('api-token-auth/', views.obtain_auth_token),
     re_path(r'^api/(?P<version>\d\.\d)/users/$', UserModelViewSet.as_view({'get': 'list'})),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path("graphql/", GraphQLView.as_view(graphiql=True)),
 ]
 

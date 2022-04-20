@@ -34,6 +34,10 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000"
 ]
 
+GRAPHENE = {
+    "SCHEMA": "service.schema.schema"
+}
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'graphene_django',
     'users',
     'project',
     'todo',

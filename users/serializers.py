@@ -14,11 +14,13 @@ class UserModelIsSuperUserSerializer(Serializer):
 
     class Meta:
         model = User
-        fields = ('is_superuser',)
+        fields = '__all__'
 
-        def get_is_superuser(self, obj):
-            queryset = obj.is_superuser()
-            return queryset
+    def get_is_super_user(self, obj):
+        print(obj)
+        print(obj.is_superuser())
+        object = obj.is_superuser()
+        return object
 
 
 class UserModelIsStaffUserSerializer(Serializer):
@@ -26,11 +28,10 @@ class UserModelIsStaffUserSerializer(Serializer):
 
     class Meta:
         model = User
-        fields = ('is_staff')
 
-        def get_is_staff(self, obj):
-            queryset = obj.is_staff()
-            return queryset
+    def get_is_staff(self, obj):
+        queryset = obj.is_staff()
+        return queryset
 
 
 class UserFullModelSerializer(ModelSerializer):
@@ -39,4 +40,4 @@ class UserFullModelSerializer(ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'is_super_user', 'is_staff_user')
+        fields = ('__all__')
