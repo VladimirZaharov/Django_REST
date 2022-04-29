@@ -10,7 +10,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         users = User.objects.all()
         users.delete()
-        users_number = int(input(': '))
+        users_number = 50
         for i in range(users_number):
             user = User.objects.create(
                 username=fake.name(),

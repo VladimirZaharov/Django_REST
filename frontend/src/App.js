@@ -11,6 +11,8 @@ import ProjectList from './components/Project.js';
 import ToDoList from './components/ToDo.js';
 import LoginForm from './components/Auth.js'
 import Cookies from 'universal-cookie';
+import ToDoForm from './components/ToDoForm.js';
+import ProjectForm from './components/ProjectForm.js';
 
 
 const NotFound404 = ({location}) => {
@@ -41,7 +43,7 @@ class App extends React.Component {
 
     load_data() {
         const headers = this.get_headers()
-        axios.get('http://127.0.0.1:8000/api/users/', {headers})
+        axios.get('http://127.0.0.1:8000/api/0.1/users/', {headers})
             .then(response => {
                 const users = response.data.results
                 const next_page_users = response.data.next
@@ -113,6 +115,37 @@ class App extends React.Component {
         }).catch(error => alert('Неверный логин или пароль'))
     }
 
+    deleteProject(id) {
+        console.log('call deleteproject')
+        const headers = this.get_headers()
+        axios.delete(`http://127.0.0.1:8000/api/projects/${id}/`, {headers})
+        .then(response => {
+            this.setState({projects: this.state.projects.filter((item)=>item.id !== id)})
+        }).catch(error => {
+            console.log(error)
+        })
+    }
+
+    createToDo(name, user, note_text) {
+        const headers = this.get_headers()
+        const data = {name: name, user: user, note_text: note_text}
+        axios.post(`http://127.0.0.1:8000/api/todo/`, data, {headers, headers}).then(response => {
+        let new_todo = response.data
+        const user = this.state.users.filter((item) => item.uid === new_todo.user)[0]?.uid
+        new_todo.user = user
+        this.setState({todos: [...this.state.todos, new_todo]}) }).catch(error => console.log(error))
+    }
+
+    deleteToDo(id) {
+        console.log('call deleteToDo')
+        const headers = this.get_headers()
+        axios.delete(`http://127.0.0.1:8000/api/todo/${id}/`, {headers})
+        .then(response => {
+            this.setState({todos: this.state.todos.filter((item)=>item.id !== id)})
+        }).catch(error => {
+            console.log(error)
+        })
+    }
 
     render() {
         return (
@@ -128,7 +161,7 @@ class App extends React.Component {
                                 <Link to='/projects'>Projects</Link>
                             </li>
                             <li>
-                                <Link to='/todos'>ToDo list</Link>
+                                <Link to='/todo'>ToDo list</Link>
                             </li>
                             <li>
                                 <h2>{this.state.login}</h2>
@@ -141,11 +174,13 @@ class App extends React.Component {
                     </nav>
                         <Routes>
                             <Route exact path='/users' element={<UserList users={this.state.users} /> }/>
-                            <Route exact path='/projects' element={<ProjectList projects={this.state.projects} /> }/>
-                            <Route exact path='/todos' element={<ToDoList todos={this.state.todos} /> }/>
+                            <Route exact path='/projects' element={<ProjectList projects={this.state.projects} deleteProject={(id)=>this.deleteProject(id)} /> }/>
+                            <Route exact path='/todo' element={<ToDoList todos={this.state.todos} deleteToDo={(id)=>this.deleteToDo(id)}/> }/>
                             <Route exact path='/login' element={
                                 <LoginForm get_token={(username, password) => this.get_token(username, password)} />} />
                             <Route element={NotFound404} />
+                            <Route exact path='/todo/create' element={<ToDoForm createToDo={(name, user, note_text) => this.createToDo(name, user, note_text)} />} />
+                            <Route exact path='/projects/create' element={<ProjectForm createToDo={(name, user, repo_link) => this.createToDo(name, user, repo_link)} />} />
                         </Routes>
                 </HashRouter>
                 <Footer />

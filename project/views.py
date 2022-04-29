@@ -12,6 +12,6 @@ class ProjectModelViewSet(ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectModelSerializer
     pagination_class = ProjectLimitOffsetPagination
-
-    def get_queryset(self):
-        return Project.objects.filter(name__contains='')
+    #
+    # def get_queryset(self):
+    #     return Project.objects.filter(name__contains='')

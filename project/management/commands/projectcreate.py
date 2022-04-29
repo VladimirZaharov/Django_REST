@@ -14,7 +14,7 @@ class Command(BaseCommand):
         project = Project.objects.all()
         users = User.objects.all()
         project.delete()
-        projects_number = int(input(': '))
+        projects_number = 15
         for i in range(projects_number):
             users_list = [random.choice(users).uid for i in range(random.randint(1,5))]
             project = Project.objects.create(
