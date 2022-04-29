@@ -26,7 +26,7 @@ class ProjectForm extends React.Component {
                     value={this.state.name} onChange={(event)=>this.handleChange(event)} />
                 </div>
                 <div className="form-group">
-                    <label for="repo_link">Note text</label>
+                    <label for="repo_link">Repo link</label>
                     <input type="text" className="form-control" name="repo_link"
                     value={this.state.repo_link} onChange={(event)=>this.handleChange(event)} />
                 </div>

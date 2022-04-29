@@ -120,9 +120,9 @@ class App extends React.Component {
         const data = {name: name, user: user, repo_link: repo_link}
         axios.post(`http://127.0.0.1:8000/api/projects/`, data, {headers, headers}).then(response => {
         let new_project = response.data
-        const user = this.state.users.filter((item) => item.uid === new_todo.user)[0]?.uid
-        new_todo.user = user
-        this.setState({todos: [...this.state.projects, new_project]}) }).catch(error => console.log(error))
+        const user = this.state.users.filter((item) => item.uid === new_project.user)[0]?.uid
+        new_project.user = user
+        this.setState({projects: [...this.state.projects, new_project]}) }).catch(error => console.log(error))
     }
 
     deleteProject(id) {
@@ -189,8 +189,10 @@ class App extends React.Component {
                             <Route exact path='/login' element={
                                 <LoginForm get_token={(username, password) => this.get_token(username, password)} />} />
                             <Route element={NotFound404} />
-                            <Route exact path='/todo/create' element={<ToDoForm createToDo={(name, user, note_text) => this.createToDo(name, user, note_text)} />} />
-                            <Route exact path='/projects/create' element={<ProjectForm createProject={(name, user, repo_link) => this.createProject(name, user, repo_link)} />} />
+                            <Route exact path='/todo/create' element={<ToDoForm users={this.state.users}
+                            createToDo={(name, user, note_text) => this.createToDo(name, user, note_text)} />} />
+                            <Route exact path='/projects/create' element={<ProjectForm users = {this.state.users}
+                            createProject={(name, user, repo_link) => this.createProject(name, user, repo_link)} />} />
                         </Routes>
                 </HashRouter>
                 <Footer />
