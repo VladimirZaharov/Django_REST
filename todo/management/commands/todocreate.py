@@ -14,7 +14,7 @@ class Command(BaseCommand):
         users = User.objects.all()
         todo = ToDo.objects.all()
         todo.delete()
-        todo_number = int(input(': '))
+        todo_number = 15
         for i in range(todo_number):
             todo = ToDo.objects.create(
                 name=fake.sentence(nb_words=5, variable_nb_words=True),
